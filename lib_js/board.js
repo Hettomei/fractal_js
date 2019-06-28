@@ -1,8 +1,8 @@
 function Board(canvas_id){
   this.canvas  = document.getElementById(canvas_id);
   this.context = this.canvas.getContext('2d');
-  this.width = 1500; //px
-  this.height = 800; //px
+  this.width = window.innerWidth - 40; //px
+  this.height = window.innerHeight - 30; //px
 }
 
 // to clean_background
