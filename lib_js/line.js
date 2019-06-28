@@ -1,18 +1,21 @@
-function Line(origin, length, angle, context){
-  this.origin = origin;
-  this.angle = angle;
-  this.context = context;
-  this.length = length;
+class Line {
 
-  this.cos_angle   = Math.cos(this.angle);
-  this.sin_angle   = Math.sin(this.angle);
+  constructor(origin, length, angle, context) {
+    this.origin = origin;
+    this.angle = angle;
+    this.context = context;
+    this.length = length;
 
-  this.destination = new Point(
-    this.origin.x + this.cos_angle * this.length,
-    this.origin.y + this.sin_angle * this.length
-  );
+    this.cos_angle   = Math.cos(this.angle);
+    this.sin_angle   = Math.sin(this.angle);
 
-  this.draw = function(){
+    this.destination = new Point(
+      this.origin.x + this.cos_angle * this.length,
+      this.origin.y + this.sin_angle * this.length
+    );
+  }
+
+  draw() {
     this.context.beginPath();
     this.context.moveTo(
       this.origin.x,
@@ -27,20 +30,40 @@ function Line(origin, length, angle, context){
     this.context.stroke();
   };
 
-  this.split_1 = function(){
-    return new Line(this.origin, this.length / 4, this.angle, context);
-  };
-
-  this.split_2 = function(){
-    return new Line(this.split_1().destination, (this.length/4)*Math.sqrt(2), this.split_1().angle - Math.PI/4, context);
+  split_1() {
+    return new Line(
+      this.origin,
+      this.length / 4,
+      this.angle,
+      this.context
+    );
   }
 
-  this.split_3 = function(){
-    return new Line(this.split_2().destination, (this.length/4)*Math.sqrt(2), this.split_2().angle + Math.PI/2, context);
+  split_2() {
+    return new Line(
+      this.split_1().destination,
+      (this.length/4)*Math.sqrt(2),
+      this.split_1().angle - Math.PI/4,
+      this.context
+    );
   }
 
-  this.split_4 = function(){
-    return new Line(this.split_3().destination, this.length / 4, this.angle, context);
+  split_3() {
+    return new Line(
+      this.split_2().destination,
+      (this.length/4)*Math.sqrt(2),
+      this.split_2().angle + Math.PI/2,
+      this.context
+    );
+  }
+
+  split_4() {
+    return new Line(
+      this.split_3().destination,
+      this.length / 4,
+      this.angle,
+      this.context
+    );
   }
 }
 
